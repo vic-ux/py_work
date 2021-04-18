@@ -1,0 +1,15 @@
+guest =[]
+guest.append('gbola')
+guest.append('dorcas')
+guest.append('lola')
+guest.append('victor')
+guest.append('mathew')
+guest.append('omolayo')
+print ("invitaion to dinner with " +guest[0].title() +'.')
+print ("invitaion to dinner with " +guest[1].title() +'.')
+print ("invitaion to dinner with " +guest[2].title() +'.')
+print ("invitaion to dinner with " +guest[3].title() +'.')
+print ("invitaion to dinner with " +guest[4].title() +'.')
+print ("invitaion to dinner with " +guest[5].title() +'.')
+print (guest)
+

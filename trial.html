@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta htt p-equiv="content-type" content="text/html;
+charset=UTF-8">
+<title>D3.js example</title>
+<scri pt type='text/javascript'
+src="http://d3js.org/d3.v3.min.js"></script>
+<style type='text/css'>
+rect:hover {
+fill: brown;
+}
+</style>
+<script type='text/javascript'>//<![CDATA[
+window.onload=function(){
+var column_data = [{
+position: 0,
+quantity: 5
+}, {
+position: 1,
+quantity: 20
+}, {
+position: 2,
+quantity: 15
+}, {
+position: 3,
+quantity: 25
+}, {
+position: 4,
+quantity: 10
+}];
+var total_width = 400;
+var total_height = 200;
+var scale_y = d3.scale.linear()
+.domain([0, d3.max(column_data, function (d) {
+return d.quantity;
+})])
+.range([0, total_height]);
+var scale_x = d3.scale.ordinal()
+.domain(d3.range(column_data.length))
+.rangeRoundBands([0, total_width], 0.05);
+var position = function (d) {
+return d.position;
+};
+var svg_container = d3.select("body")
+.append("svg")
+.attr("width", total_width)
+.attr("height", total_height);
+svg_container.selectAll("rect")
+.data(column_data, position)
+.enter()
+.append("rect")
+.attr("x", function (d, i) {
+return scale_x(i);
+})
+.attr("y", function (d) {
+return total_height - scale_y(d.quantity);
+})
+.attr("width", scale_x.rangeBand())
+.attr("height", function (d) {
+return scale_y(d.quantity);
+})
+.attr("fill", "teal");
+var sort = function () {
+bars_to_sort = function (a, b) {
+return b.quantity - a.quantity;
+};
+svg_container.selectAll("rect")
+.sort(bars_to_sort)
+.transition()
+.delay(0)
+.duration(300)
+.attr("x", function (d, n) {
+return scale_x(n);
+});
+};
+d3.select("#sort").on("click", sort);
+d3.select("#unsort").on("click", unsort);
+function unsort() {
+svg_container.selectAll("rect")
+.sort(function (a, b) {
+return a.position - b.position;
+})
+.transition()
+.delay(0)
+.duration(1200)
+.attr("x", function (d, i) {
+return scale_x(i);
+});
+};
+}//]]>
+</script>
+</head>
+<body>
+<button id="sort" onclick="sortBars()">Sort</button>
+<button id="unsort" onclick="unsort()">Unsort</button>
+<p>
+</body>
+</html>
